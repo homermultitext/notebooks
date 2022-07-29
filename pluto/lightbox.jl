@@ -19,18 +19,15 @@ begin
 	using HmtArchive, HmtArchive.Analysis
 	using CitableImage
 	using CitableBase
+
+	using Markdown
 	using PlutoUI
 	md"""*Unhide this cell to see or modify your notebook's environment*"""
 end
 
-# ╔═╡ 1e65d74b-add2-4b53-b382-f178fd20dbd7
-md"""
-# HMT project: lightbox
-"""
-
 # ╔═╡ 5e750324-32fc-440e-a33f-328206a2a3cd
 md"""
-Future home of "lightbox" dashboard: browse published images from the HMT archive.
+> Future home of "lightbox" dashboard: browse published images from the HMT archive.
 """
 
 # ╔═╡ 12a6483e-f5b5-4b82-8f6b-1ae14a0eb4aa
@@ -39,7 +36,7 @@ Outline of immediate work:
 
 1. √ select a collection
 2. choose a screen from paginated formatting of thumbnails
-3. link thumbs to ICT2
+3. √ use lightbox object o link thumbs to ICT2 
 """
 
 # ╔═╡ ae8bdd78-0f59-4cb4-a774-3995d0c9ff78
@@ -75,9 +72,11 @@ imagecollections = filter(coll -> length(coll) > 1, hmt_images(src))
 # ╔═╡ 0cb64db0-afb0-4440-a528-bcedb142acf2
 releaseinfo =  hmt_releaseinfo(src)
 
-# ╔═╡ 65a95699-355a-451d-888d-894e5ff6c2d9
+# ╔═╡ 1e65d74b-add2-4b53-b382-f178fd20dbd7
 md"""
 *Notebook version*: **unpublished**.  *Data set*: **$(releaseinfo)**
+
+# HMT project: lightbox
 """
 
 # ╔═╡ 9906ebac-fcaa-4124-8d8a-45f778fa6262
@@ -92,12 +91,31 @@ end
 # ╔═╡ fa632ff8-7cf8-4278-b290-729a7d6b881e
 @bind imgc Select(collmenu)
 
+# ╔═╡ 0b3805aa-c1db-495a-9213-63c4efb7f3d9
+selectedcoll = filter(c -> string(urn(c)) == imgc, imagecollections)[1]
+		
+
+# ╔═╡ 667a37e8-ccc0-4dac-b016-696f26a01f8e
+lb = lightbox(selectedcoll)
+
+# ╔═╡ 2e57394c-64ec-46ed-8180-c7d2d5bd4ea5
+md"""
+Collection with **$(length(selectedcoll))** images, formatted in **$(pages(lb))** lightbox pages.
+"""
+
+# ╔═╡ f0f7b966-ea18-4b06-83d4-b1fa78230502
+mdtable(lb, 1) |> Markdown.parse
+
+# ╔═╡ a6920b20-f32a-4949-818a-6be508c99393
+pages(lb)
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 CitableBase = "d6f014bd-995c-41bd-9893-703339864534"
 CitableImage = "17ccb2e5-db19-44b3-b354-4fd16d92c74e"
 HmtArchive = "1e7b0059-6550-4515-8382-5d3f2046a0a7"
+Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
@@ -1314,14 +1332,17 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
-# ╟─65a95699-355a-451d-888d-894e5ff6c2d9
 # ╟─1e65d74b-add2-4b53-b382-f178fd20dbd7
 # ╟─5e750324-32fc-440e-a33f-328206a2a3cd
 # ╟─fa632ff8-7cf8-4278-b290-729a7d6b881e
+# ╟─2e57394c-64ec-46ed-8180-c7d2d5bd4ea5
+# ╠═f0f7b966-ea18-4b06-83d4-b1fa78230502
+# ╠═667a37e8-ccc0-4dac-b016-696f26a01f8e
+# ╠═a6920b20-f32a-4949-818a-6be508c99393
 # ╟─12a6483e-f5b5-4b82-8f6b-1ae14a0eb4aa
 # ╟─ae8bdd78-0f59-4cb4-a774-3995d0c9ff78
 # ╟─2d78b255-b9a8-4733-81bc-c6c444e9513e
-# ╟─23430ba2-0f34-11ed-34da-d3fe80b5eb0c
+# ╠═23430ba2-0f34-11ed-34da-d3fe80b5eb0c
 # ╟─3c8fef3d-e74d-487d-8630-2ac539122e6d
 # ╟─8fcc5519-6f42-4d39-b2b7-ca87a0f91ce3
 # ╟─9b199377-16f6-4aa5-9e1f-87f244703a82
@@ -1330,5 +1351,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─09719dd0-7a87-4c73-a22a-43fbe43695a9
 # ╟─0cb64db0-afb0-4440-a528-bcedb142acf2
 # ╟─9906ebac-fcaa-4124-8d8a-45f778fa6262
+# ╠═0b3805aa-c1db-495a-9213-63c4efb7f3d9
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
