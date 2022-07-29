@@ -17,7 +17,7 @@ Built with Pluto!
 md"""
 Links when running locally in PlutoSliderServer:
 
--  [lightbox](./lightbox.html?isoloated_cell_id=1e65d74b-add2-4b53-b382-f178fd20dbd7)
+-  [lightbox](./lightbox.html?isolated_cell_id=1e65d74b-add2-4b53-b382-f178fd20dbd7)
 
 
 To be added:
