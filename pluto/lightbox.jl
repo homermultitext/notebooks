@@ -81,6 +81,9 @@ selectedcoll = filter(c -> string(urn(c)) == imgc, imagecollections)[1]
 # ╔═╡ 667a37e8-ccc0-4dac-b016-696f26a01f8e
 lb = lightbox(selectedcoll, rows = r, cols = c)
 
+# ╔═╡ 8e0f79d4-629c-4ccc-9f77-cb782608f00d
+pages(lb)
+
 # ╔═╡ 0592dac0-0750-4059-81a7-c6ffed5768fa
 pg_slider = @bind pg Slider(1:pages(lb), show_value = true);
 
@@ -1335,6 +1338,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─1e65d74b-add2-4b53-b382-f178fd20dbd7
 # ╟─645df05d-6927-4982-896c-94e4f3d0602f
 # ╟─667a37e8-ccc0-4dac-b016-696f26a01f8e
+# ╠═8e0f79d4-629c-4ccc-9f77-cb782608f00d
 # ╠═9da46d34-7d08-435d-ba23-8ec81fb1a9d7
 # ╠═39dbe8ef-c218-470e-9e58-7370038411e0
 # ╠═5fd0ca9e-523d-43ec-acfa-5596b7ca4941
