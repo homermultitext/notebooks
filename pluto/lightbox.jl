@@ -88,7 +88,7 @@ pg_slider = @bind pg Slider(1:pages(lb), show_value = true);
 PlutoUI.ExperimentalLayout.Div(
 	[
 md"""
-*Notebook version*: **unpublished**.  *Data set*: **$(releaseinfo)**
+*Notebook version*: **1.0.0**.  *Data set*: **$(releaseinfo)**
 
 # HMT project: lightbox
 
@@ -96,7 +96,7 @@ md"""
 """, 
 		html"""<br/><br/>""",
 		coll_selector,
-		md"Collection with **$(length(selectedcoll))** images, formatted in **$(pages(lb))** lightbox panels.",
+		md"*Collection with* **$(length(selectedcoll))** *images, formatted in* **$(pages(lb))** *lightbox panels*.",
 		html"""<br/><br/>""",
 
 		PlutoUI.ExperimentalLayout.grid([
@@ -1332,7 +1332,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
-# ╠═1e65d74b-add2-4b53-b382-f178fd20dbd7
+# ╟─1e65d74b-add2-4b53-b382-f178fd20dbd7
 # ╟─645df05d-6927-4982-896c-94e4f3d0602f
 # ╟─667a37e8-ccc0-4dac-b016-696f26a01f8e
 # ╠═9da46d34-7d08-435d-ba23-8ec81fb1a9d7
@@ -1349,6 +1349,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─09719dd0-7a87-4c73-a22a-43fbe43695a9
 # ╟─0cb64db0-afb0-4440-a528-bcedb142acf2
 # ╟─9906ebac-fcaa-4124-8d8a-45f778fa6262
-# ╠═0b3805aa-c1db-495a-9213-63c4efb7f3d9
+# ╟─0b3805aa-c1db-495a-9213-63c4efb7f3d9
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
