@@ -25,26 +25,16 @@ begin
 	md"""*Unhide this cell to see or modify your notebook's environment*"""
 end
 
-# ╔═╡ 5e750324-32fc-440e-a33f-328206a2a3cd
-md"""
-> Future home of "lightbox" dashboard: browse published images from the HMT archive.
+# ╔═╡ 645df05d-6927-4982-896c-94e4f3d0602f
+md"""!!! note "UI elements"
+
 """
 
-# ╔═╡ 12a6483e-f5b5-4b82-8f6b-1ae14a0eb4aa
-md"""
-Outline of immediate work:
+# ╔═╡ 39dbe8ef-c218-470e-9e58-7370038411e0
+r_slider = @bind r Slider(1:25, show_value = true);
 
-1. √ select a collection
-2. choose a screen from paginated formatting of thumbnails
-3. √ use lightbox object o link thumbs to ICT2 
-"""
-
-# ╔═╡ ae8bdd78-0f59-4cb4-a774-3995d0c9ff78
-md"""!!! note "For first release"
-
-1. use `PlutoUI.ExperimentalLayout` to format as a dashboard
-2. use `PlutoRunner` to find cell IDs, and create a URL to end-user UI elements only (no underlying code included)
-"""
+# ╔═╡ 5fd0ca9e-523d-43ec-acfa-5596b7ca4941
+c_slider = @bind c Slider(2:12, default = 3, show_value = true);
 
 # ╔═╡ 2d78b255-b9a8-4733-81bc-c6c444e9513e
 md"""!!! note "Base settings"
@@ -72,13 +62,6 @@ imagecollections = filter(coll -> length(coll) > 1, hmt_images(src))
 # ╔═╡ 0cb64db0-afb0-4440-a528-bcedb142acf2
 releaseinfo =  hmt_releaseinfo(src)
 
-# ╔═╡ 1e65d74b-add2-4b53-b382-f178fd20dbd7
-md"""
-*Notebook version*: **unpublished**.  *Data set*: **$(releaseinfo)**
-
-# HMT project: lightbox
-"""
-
 # ╔═╡ 9906ebac-fcaa-4124-8d8a-45f778fa6262
 begin
 	collmenu = Pair{String,String}[]
@@ -88,26 +71,43 @@ begin
 	collmenu
 end
 
-# ╔═╡ fa632ff8-7cf8-4278-b290-729a7d6b881e
-@bind imgc Select(collmenu)
+# ╔═╡ 9da46d34-7d08-435d-ba23-8ec81fb1a9d7
+coll_selector = @bind imgc Select(collmenu);
 
 # ╔═╡ 0b3805aa-c1db-495a-9213-63c4efb7f3d9
 selectedcoll = filter(c -> string(urn(c)) == imgc, imagecollections)[1]
 		
 
 # ╔═╡ 667a37e8-ccc0-4dac-b016-696f26a01f8e
-lb = lightbox(selectedcoll)
+lb = lightbox(selectedcoll, rows = r, cols = c)
 
-# ╔═╡ 2e57394c-64ec-46ed-8180-c7d2d5bd4ea5
+# ╔═╡ 0592dac0-0750-4059-81a7-c6ffed5768fa
+pg_slider = @bind pg Slider(1:pages(lb), show_value = true);
+
+# ╔═╡ 1e65d74b-add2-4b53-b382-f178fd20dbd7
+PlutoUI.ExperimentalLayout.Div(
+	[
 md"""
-Collection with **$(length(selectedcoll))** images, formatted in **$(pages(lb))** lightbox pages.
-"""
+*Notebook version*: **unpublished**.  *Data set*: **$(releaseinfo)**
 
-# ╔═╡ f0f7b966-ea18-4b06-83d4-b1fa78230502
-mdtable(lb, 1) |> Markdown.parse
+# HMT project: lightbox
 
-# ╔═╡ a6920b20-f32a-4949-818a-6be508c99393
-pages(lb)
+>Browse panels of images from the Homer Mulitext project's archive.  Thumbnails are linked to pannable/zoomable versions in the HMT Image Citation Tool.
+""", 
+		html"""<br/><br/>""",
+		coll_selector,
+		md"Collection with **$(length(selectedcoll))** images, formatted in **$(pages(lb))** lightbox panels.",
+		html"""<br/><br/>""",
+
+		PlutoUI.ExperimentalLayout.grid([
+		  	md"*Number of rows*"  r_slider md"*Select a panel*"  pg_slider
+			md"*Number of columns*"  c_slider md"" md""
+		]),
+		
+
+		Markdown.parse(mdtable(lb, pg))
+	]
+)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1332,15 +1332,13 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
-# ╟─1e65d74b-add2-4b53-b382-f178fd20dbd7
-# ╟─5e750324-32fc-440e-a33f-328206a2a3cd
-# ╟─fa632ff8-7cf8-4278-b290-729a7d6b881e
-# ╟─2e57394c-64ec-46ed-8180-c7d2d5bd4ea5
-# ╠═f0f7b966-ea18-4b06-83d4-b1fa78230502
-# ╠═667a37e8-ccc0-4dac-b016-696f26a01f8e
-# ╠═a6920b20-f32a-4949-818a-6be508c99393
-# ╟─12a6483e-f5b5-4b82-8f6b-1ae14a0eb4aa
-# ╟─ae8bdd78-0f59-4cb4-a774-3995d0c9ff78
+# ╠═1e65d74b-add2-4b53-b382-f178fd20dbd7
+# ╟─645df05d-6927-4982-896c-94e4f3d0602f
+# ╟─667a37e8-ccc0-4dac-b016-696f26a01f8e
+# ╠═9da46d34-7d08-435d-ba23-8ec81fb1a9d7
+# ╠═39dbe8ef-c218-470e-9e58-7370038411e0
+# ╠═5fd0ca9e-523d-43ec-acfa-5596b7ca4941
+# ╠═0592dac0-0750-4059-81a7-c6ffed5768fa
 # ╟─2d78b255-b9a8-4733-81bc-c6c444e9513e
 # ╟─23430ba2-0f34-11ed-34da-d3fe80b5eb0c
 # ╟─3c8fef3d-e74d-487d-8630-2ac539122e6d
